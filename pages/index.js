@@ -1,7 +1,10 @@
 import Head from 'next/head'
 import s from '../styles/Home.module.scss'
+import { useMultistepForm } from "../hooks/useMultistepForm.ts"
 
 const Home = () => {
+
+  const { step, steps, currentStepIndex, isFirstStep, back, next } = useMultistepForm([<div>One</div>, <div>Two</div>])
 
   return (
     <div className={s.container}>
@@ -12,9 +15,18 @@ const Home = () => {
       </Head>
 
       <main className={s.main} data-testid="home">
-        <h1 className={s.title}>
-          Yet <a target="_blank" rel="noreferrer" href="https://heliotrope-wish-112.notion.site/Matt-Collier-portfolio-26f03cfc72b546eab77a095d9f98d7d3">another</a> unfinished project
-        </h1>
+        <div className={s.form}>
+          <h3 className={s.h3}>hello world</h3> 
+          <form>
+            <div style={{ position: "absolute", top: "0.5rem", right: "0.5rem"  }}>{currentStepIndex + 1} / {steps.length}</div>
+            {step}
+            <div className={s.buttons}> 
+              {!isFirstStep && <button type="button" onClick={back}>Previous</button> }
+              {isFirstStep &&  <button type="button" onClick={next}>Next</button>}
+              
+            </div>
+          </form>
+        </div>
       </main>
     </div>
   )
